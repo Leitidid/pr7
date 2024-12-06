@@ -52,19 +52,30 @@ namespace TriangleApp
         public class Equilateral : Triangle
         {
             public double Pole { get; private set; }
-            public Equilateral(double side):base(side,side,side)
+            public Equilateral(double a, double b , double c ):base(a,b,c)
             {
-                CalculatePole();
+                if (SideA == SideB && SideB == SideC)
+                {
+                    CalculatePole();
+                }
+                else
+                {
+                    throw new Exception("равносторонний");
+                }
+                try { }
+                catch (Exception e) { }
             }
             private void CalculatePole()
             {
-                double side = SideA;
-                Pole = (side * side * Math.Sqrt(3)) ;
+                Pole = (SideA * SideA * Math.Sqrt(3) / 4);
             }
             public void UpdatePole()
             {
                 CalculatePole();
             }
+            
         }
     }
 }
+//double p = SideA + SideB + SideC;
+//double Pole = Math.Sqrt(p * (p - SideA) * (p - SideB) * (p - SideC));

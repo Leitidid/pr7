@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq.Expressions;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TriangleApp;
+using static TriangleApp.Triangle;
 
 namespace pr6
 {
@@ -100,6 +102,33 @@ namespace pr6
                     MessageBox.Show("введите правильные числовые значения.");
                 }
             }
+
+        private void Bt3_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double sideA = double.Parse(tb1.Text);
+                double sideB = double.Parse(tb2.Text);
+                double SideC = double.Parse(tb3.Text);
+                Triangle triangle = new Triangle(sideA, sideB, SideC);
+                if
+                    (triangle.pravda())
+                {
+                    Equilateral equilateral = new Equilateral(sideA, sideB, SideC);
+                    tbres.Text = ("площадь равностороннего треугольникa" + equilateral.Pole);
+                }
+                else
+                {
+                    MessageBox.Show("треугольник не равносторонний");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("введите правильные числовые значения.");
+            }
+
+
+        }
         
     }
 }
