@@ -1,81 +1,69 @@
 using System;
 using TriangleApp;
 
-namespace TriangleApp
+namespace practika
 {
-    public class Triangle
+    public class ArrayTasks
     {
-        public double SideA { get; set; }
-        public double SideB { get; set; }
-        public double SideC { get; set; }
-        public Triangle(double a, double b, double c)
+        // Задание 1: Проверка на одинаковые цифры в трехзначном числе
+        public static bool AreDigitsEqual(int num)
         {
-            SideA = a;
-            SideB = b; SideC = c;
+            string numStr = num.ToString();
+            return numStr.Length == 3 && numStr.Distinct().Count() == 1;
         }
-        //���������� ���������
-        public double GetPerimeter()
+
+        // Задание 2: Подсчет положительных и отрицательных чисел
+        public static (int positiveCount, int negativeCount) CountPositiveNegative(int num1, int num2, int num3)
         {
-            return SideA + SideB + SideC;
+            int positiveCount = 0;
+            int negativeCount = 0;
+
+            if (num1 > 0) positiveCount++; else if (num1 < 0) negativeCount++;
+            if (num2 > 0) positiveCount++; else if (num2 < 0) negativeCount++;
+            if (num3 > 0) positiveCount++; else if (num3 < 0) negativeCount++;
+
+            return (positiveCount, negativeCount);
         }
-        public void SetParams(double a, double b, double c)
+
+        // Задание 3: Разница между максимальным и минимальным элементами массива
+        public static int MaxMinDifference(int[] arr)
         {
-            SideA = a;
-            SideB = b; SideC = c;
+            // проверка на пустой массив
+            if (arr == null || !arr.Any()) return 0;
+
+            return arr.Max() - arr.Min();
         }
-        public void SetParams(double dvax)
+
+        // Задание 4: Создание массива из количества элементов в диапазоне столбцов матрицы
+        public static int[] CreateArrayFromMatrix(int[,] matrix, int a, int b)
         {
-            SideA *= dvax;
-            SideB *= dvax; SideC *= dvax;
-        }
-        public void SetParams(int Sidex, int Sidey, int Sidez)
-        {
-            SideA += Sidex;
-            SideB += Sidey; SideC += Sidez;
-        }
-        public bool pravda()
-        {
-            return (SideA + SideB > SideC) && (SideA + SideC > SideB) && (SideB + SideC > SideA);
-        }
-        public static Triangle operator ++(Triangle triangle)
-        {
-            triangle.SideA++;
-            triangle.SideB++; triangle.SideC++;
-            return triangle;
-        }
-        public static Triangle operator --(Triangle triangle)
-        {
-            triangle.SideA--;
-            triangle.SideB--; triangle.SideC--;
-            return triangle;
-        }
-        public class Equilateral : Triangle
-        {
-            public double Pole { get; private set; }
-            public Equilateral(double a, double b , double c ):base(a,b,c)
+            if (matrix == null ) return null; //ниче не возвращаем, если матрица пуста
+
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            // Проверка границ диапазона 
+            if (a < 0 || b >= cols || a > b) return null;
+
+
+            int[] result = new int[rows];
+            for (int i = 0; i < rows; i++)
             {
-                if (SideA == SideB && SideB == SideC)
-                {
-                    CalculatePole();
-                }
-                else
-                {
-                    throw new Exception("��������������");
-                }
-                try { }
-                catch (Exception e) { }
+               result[i] = b-a + 1; //подсчет количества элементов
             }
-            private void CalculatePole()
-            {
-                Pole = (SideA * SideA * Math.Sqrt(3) / 4);
-            }
-            public void UpdatePole()
-            {
-                CalculatePole();
-            }
-            
+            return result;
+        }
+
+        // Метод создания матрицы с рнд значениями
+        public static int[,] CreateRandomMatrix(int rows, int cols)
+        {
+            Random random = new Random();
+            int[,] matrix = new int[rows, cols];
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    matrix[i, j] = random.Next(1, 101);
+            return matrix;
         }
     }
 }
-//double p = SideA + SideB + SideC;
-//double Pole = Math.Sqrt(p * (p - SideA) * (p - SideB) * (p - SideC));
+   

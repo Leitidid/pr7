@@ -9,8 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TriangleApp;
-using static TriangleApp.Triangle;
+using practika;
+using ArrayTasks;
 
 namespace pr6
 {
@@ -23,112 +23,74 @@ namespace pr6
         {
             InitializeComponent();
         }
-       //вычисления периметра
-            private void Bt1_Click(object sender, RoutedEventArgs e)
-            {
-                double sideA = double.Parse(tb1.Text); double sideB = double.Parse(tb2.Text);
-                double sideC = double.Parse(tb3.Text); Triangle triangle = new Triangle(sideA, sideB, sideC);
-                if (triangle.pravda())
-                {
-                    double perimeter = triangle.GetPerimeter();
-                    tbResult.Text = perimeter.ToString(); MessageBox.Show("такой треугольник существует");
-                }
-                else
-                {
-                    MessageBox.Show("такой треугольник не существует");
-                }
-                // Вычисление периметра и результат
-            }
-            private void Bt2_Click(object sender, RoutedEventArgs e)
-            {
-                double sideA = double.Parse(tb1.Text);
-                double sideB = double.Parse(tb2.Text); double sideC = double.Parse(tb3.Text);
-                Triangle triangle = new Triangle(sideA, sideB, sideC);
-                // Увеличение треугольника в 2 раза
-                triangle.SetParams(2);
-                // Обновление            tb1.Text = triangle.SideA.ToString();
-                tb2.Text = triangle.SideB.ToString(); tb3.Text = triangle.SideC.ToString();
-            }
-            private void MenuItem_Click(object sender, RoutedEventArgs e)
-            {
-                string developer = "Дудина Екатерина";
-                int job = 6; string task = "Использовать класс Triangle (треугольник) с полями-сторонами. Разработать\r\nоперацию для определения возможности существование треугольника с заданными \r\nсторонами true/false. Разработать операции для увеличения/уменьшения сторон на \r\n1.";
-                MessageBox.Show($"Разработчик: {developer}\nНомер работы: {job}\nЗадание: {task}", "О программе");
-            }
-            // "Выход"
-            private void MenuItem_Exit(object sender, RoutedEventArgs e)
-            {
-                this.Close();
-            }
-            private void btbig_Click(object sender, RoutedEventArgs e)
-            {
-                double sideA = double.Parse(tb1.Text); double sideB = double.Parse(tb2.Text);
-                double sideC = double.Parse(tb3.Text);
-                Triangle triangle = new Triangle(sideA, sideB, sideC); triangle.SetParams(sideA, sideB, sideC);
-                triangle++; tb1.Text = triangle.SideA.ToString();
-                tb2.Text = triangle.SideB.ToString();
-                tb3.Text = triangle.SideC.ToString();
-            }
-            private void btmen_Click(object sender, RoutedEventArgs e)
-            {
-                double sideA = double.Parse(tb1.Text);
-                double sideB = double.Parse(tb2.Text); double sideC = double.Parse(tb3.Text);
-                Triangle triangle = new Triangle(sideA, sideB, sideC);
-                triangle.SetParams(sideA, sideB, sideC); triangle--;
-                tb1.Text = triangle.SideA.ToString(); tb2.Text = triangle.SideB.ToString();
-                tb3.Text = triangle.SideC.ToString();
-            }
-            private void UpdateTriangle(double all)
-            {
-                try
-                {
-                    double sideA = double.Parse(tb1.Text);
-                    double sideB = double.Parse(tb2.Text); double sideC = double.Parse(tb3.Text);
-                    Triangle triangle = new Triangle(sideA, sideB, sideC);
-                    triangle.SetParams(sideA, sideB, sideC); // Увеличиваем/уменьшаем все стороны
-                    triangle++; triangle--;
-                    if (triangle.pravda())
-                    {
-                        tb1.Text = triangle.SideA.ToString(); tb2.Text = triangle.SideB.ToString();
-                        tb3.Text = triangle.SideC.ToString();
-                    }
-                    else
-                    {
-                        MessageBox.Show("изменения: стороны не удовлетворяют треугольник");
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("введите правильные числовые значения.");
-                }
-            }
-
-        private void Bt3_Click(object sender, RoutedEventArgs e)
+     
+           // Обработчик для Задания 1
+        private void Task1_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (int.TryParse(task1.Text, out int num) && num >= 100 && num <= 999) //смотрим трехзначное ли число
             {
-                double sideA = double.Parse(tb1.Text);
-                double sideB = double.Parse(tb2.Text);
-                double SideC = double.Parse(tb3.Text);
-                Triangle triangle = new Triangle(sideA, sideB, SideC);
-                if
-                    (triangle.pravda())
-                {
-                    Equilateral equilateral = new Equilateral(sideA, sideB, SideC);
-                    tbres.Text = ("площадь равностороннего треугольникa" + equilateral.Pole);
-                }
-                else
-                {
-                    MessageBox.Show("треугольник не равносторонний");
-                }
+                 bool areEqual = Array.AreDigitsEqual(num);
+                 task1Result.Text = areEqual ? "Все цифры одинаковые" : "Цифры разные";
             }
-            catch
+            else
             {
-                MessageBox.Show("введите правильные числовые значения.");
+                task1Result.Text = "ошибка. Введите трехзначное число.";
             }
-
-
         }
-        
+
+        // Обработчик для Задания 2
+        private void Task2_Click(object sender, RoutedEventArgs e)
+        {
+            string[] input = task2.Text.Split(' ');
+            if (input.Length == 3 && int.TryParse(input[0], out int num1) 
+                && int.TryParse(input[1], out int num2) && int.TryParse(input[2], out int num3))
+            {
+                (int positiveCount, int negativeCount) = ArrayTasks.CountPositiveNegative(num1, num2, num3);
+                task2Result.Text = $"Положительных: {positiveCount}, Отрицательных: {negativeCount}";
+            }
+            else
+            {
+                task2.Text = "Ошибка. Введите три целых числа через пробел.";
+            }
+        }
+
+        // Обработчик для Задания 3
+        private void Task3_Click(object sender, RoutedEventArgs e)
+        {
+            string[] input = task3.Text.Split(' ');
+            if (input.All(x => int.TryParse(x, out _))) //Проверка на то, что все введенные значения - числа
+            {
+                int[] arr = input.Select(int.Parse).ToArray();
+                int difference = Array.MaxMin(arr); 
+                task3Result.Text = $"Разница между макимальным и минимальным числом: {difference}";
+            }
+            else
+            {
+                task3ResultTextBlock.Text = "ошибка. Введите целые числа через пробел.";
+            }
+        }
+
+        // Обработчик для Задания 4
+        private void Task4_Click(object sender, RoutedEventArgs e)
+        {
+            string[] input = task4.Text.Split(' ');
+            
+            if (input.Length == 4 && int.TryParse(input[0], out int rows) && int.TryParse(input[1], out int cols)
+                && int.TryParse(input[2], out int a) && int.TryParse(input[3], out int b))
+           {
+                int[,] matrix = Array.CreateRandomMatrix(rows, cols);
+                int[] result = Array.CreateArrayFromMatrix(matrix, a, b);
+
+                if (resultArray != null) //Проверка, что массив был создан успешно
+                    task4Result.Text = string.Join(" ", result);
+                else
+                    task4Result.Text = "Ошибка: введите правильные значения";
+            }
+            else
+            {
+                task4Result.Text = "ошибка. Введите размер матрицы и диапазон a-b (через пробел)";
+            }
+        }
     }
 }
+  
